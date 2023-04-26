@@ -10,7 +10,7 @@ static UserRegistration=async(req,res)=>{
     const {name,email,password,password_confirmation,tc}=req.body;
     const user= await usermodel.findOne({email:email})
     if(user){
-        res.send({"status":"failed","message":"email already exists"})
+        res.send({"status":"failed","message":"Email Already Exists"})
     }
     else{
          if(name && email && password && password_confirmation && tc){
@@ -25,12 +25,11 @@ static UserRegistration=async(req,res)=>{
                     tc:tc
                 })
                 await newUser.save();
-                const saved_user=await usermodel.findOne({email:email});
+                // const saved_user=await usermodel.findOne({email:email});
                 //generate jwt token
-                const access_token=jwt.sign({userID:saved_user._id},process.env.jwt_secret,{expiresIn:'1h'});
-                const refresh_token=jwt.sign({userID:saved_user._id},process.env.jwt_secret,{expiresIn:'1.5h'});
+
                 
-                res.status(201).send({"status":"Success","message":"Registerd Successfully","token":{'access_token':access_token,'refresh_token':refresh_token}})
+                res.status(201).send({"status":"Success","message":"Registerd Successfully,Please Login"})
                } catch (error) {
                 res.send({"status":"failed","message":"Unable to register"})
                }
@@ -52,8 +51,9 @@ static userLogin=async(req,res)=>{
             if(user != null){
                 const isMatch= await bcrypt.compare(password,user.password);
                if ((user.email ===email) && isMatch) {
-                const token=jwt.sign({userID:user._id},process.env.jwt_secret,{expiresIn:'1d'});
-                res.send({"status":"Success","message":"Login Successfull","token":token});
+                const access_token=jwt.sign({userID:user._id},process.env.jwt_secret,{expiresIn:'1h'});
+                const refresh_token=jwt.sign({userID:user._id},process.env.jwt_secret,{expiresIn:'1.5h'});
+                res.send({"status":"Success","message":"Login Successfull,Redirecting to Dashboard","token":{'access_token':access_token,'refresh_token':refresh_token}});
                }else{
                 res.send({"status":"failed","message":"Email or Password is not valid"});
                } 
@@ -104,7 +104,7 @@ static SendUserResetPassword=async(req,res)=>{
         if (user) {
             const secret=user._id + process.env.jwt_Secret;
             const token=jwt.sign({userID:user._id},secret,{expiresIn:'10m'});
-            const link=`http://127.0.0.1/api/user/reset/${user._id}/${token}`;
+            const link=`http://localhost:3000/api/user/reset/${user._id}/${token}`;
             console.log(link);
             let info=transporter.sendMail({
                 from:process.env.EMAIL_FROM,
@@ -113,7 +113,7 @@ static SendUserResetPassword=async(req,res)=>{
                 html:`<a href=${link}>Click here</a>to reset your password`
             })
             
-            res.send({"status":"success","message":"email sent please ... check your email","info":info}) 
+            res.send({"status":"success","message":"email sent please ... Please check your email","info":info}) 
         }else{
             res.send({"status":"failed","message":"User does not exist"}) 
         }
@@ -134,7 +134,7 @@ static UserPasswordReset=async(req,res)=>{
                 const salt=await bcrypt.genSalt(10);
                 const hashPassword=await bcrypt.hash(password,salt);
                 await usermodel.findByIdAndUpdate(user._id,{$set:{password:hashPassword}});
-                res.send({"status":"successs","message":"password reset successfull"})
+                res.send({"status":"success","message":"password reset successfull.Redirecting to Home page"})
             }else{
                 res.send({"status":"failed","message":"password and confirm password does not match"})
             }
