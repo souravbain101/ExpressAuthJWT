@@ -6,7 +6,7 @@ import CheckUserauth from '../middlewares/Auth_middleware.js'
 
 //Route level middleware to protect route
 router.use('/changepassword',CheckUserauth);
-router.use('/loggeduser',CheckUserauth);
+router.use('/profile',CheckUserauth);
 
 //Public Routes
 
@@ -20,7 +20,7 @@ router.post('/reset-password/:id/:token',UserControler.UserPasswordReset);
 //Private Routes
 
 router.post('/changepassword',UserControler.Changepassword);
-router.get('/loggeduser',UserControler.LoggedUser);
+router.get('/profile',UserControler.LoggedUser);
 router.get('/refresh_token',UserControler.refresh_token)
  
 
