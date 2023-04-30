@@ -21,7 +21,7 @@ connectDB(DATABASE_URL);
 app.use(express.json());
 
 app.use('/',router);
-app.use('/expence',expence);
+app.use('/expence',expence)
 
 
 
