@@ -147,15 +147,17 @@ static UserPasswordReset=async(req,res)=>{
 }
 
 static refresh_token=async(req,res)=>{
+    console.log('api call');
     let token
     const {authorization}=req.headers
     if (authorization && authorization.startsWith('Bearer')) {
         try {
             //get token from header
             token=authorization.split(' ')[1];
-
+            console.log(token);
             //verify token
             const {userID}=jwt.verify(token,process.env.jwt_Secret);
+            
             if (userID) {
                 const access_token=jwt.sign({userID:userID},process.env.jwt_secret,{expiresIn:'1h'});
                 const refresh_token=jwt.sign({userID:userID},process.env.jwt_secret,{expiresIn:'1.5h'});
