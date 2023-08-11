@@ -6,6 +6,7 @@ const Expense = new Schema({
   date: {type: String,required:true},
   currency: {type:String,required:true},
   amount: {type:Number,required:true},
+  month: {type:Number,required:true},
 });
 export default model("expenses", Expense);
 //   model_name , schema function
