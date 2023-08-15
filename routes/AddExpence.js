@@ -10,4 +10,6 @@ router.post('/add',expenceControl.addExpense);
 // ROUTE 1 : GET all notes using : GET "/api/notes/fetchallnotes" login required
 router.get("/fetchedata", expenceControl.fetchExpences);
 router.get("/fetchdashdata", expenceControl.fetchdashdata);
+router.get("/Fetchlastmonthdata", expenceControl.Fetchlastmonthdata);
+
   export default router;
