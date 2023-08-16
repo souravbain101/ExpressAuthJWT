@@ -10,7 +10,7 @@ import bodyparser from 'body-parser';
 const app=express();
 app.use(bodyparser.json({extended:true}));
 app.use(bodyparser.urlencoded({extended:true}));
-const port=process.env.PORT;
+const port=process.env.PORT ||8000 ;
 const DATABASE_URL=process.env.dbURL;
 //CORS POLICY
 app.use(cors());
