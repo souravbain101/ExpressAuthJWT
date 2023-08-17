@@ -11,5 +11,6 @@ router.post('/add',expenceControl.addExpense);
 router.get("/fetchedata", expenceControl.fetchExpences);
 router.get("/fetchdashdata", expenceControl.fetchdashdata);
 router.get("/Fetchlastmonthdata", expenceControl.Fetchlastmonthdata);
+router.get("/FetchTransaction", expenceControl.FetchTransaction);
 
   export default router;

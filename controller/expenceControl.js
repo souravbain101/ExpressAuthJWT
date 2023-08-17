@@ -40,7 +40,7 @@ class expenceControl {
             { $match:  {$and:[{ month: { $eq:index+1 } },{user:{$eq:user}}] } } ,
             
           ] );
-          console.log(test);
+          // console.log(test);
 
           // let test=await Expense.find({month:index+1});
           let obj={"name":date.toLocaleString('en-US',{month:'short'}),"Food & Drinks":0,"Rents":0,"Entertainment":0};
@@ -70,7 +70,7 @@ class expenceControl {
       // const datas = await Expense.find({ user: req.user.id });
       // console.log(datas);
       const user=req.user._id
-      console.log(user);
+      // console.log(user);
 
       const date=new Date();
       let month=date.getMonth();
@@ -153,6 +153,22 @@ class expenceControl {
         res.json(superarray);
 
 
+    } catch (error) {
+      console.error(error.message);
+      res.status(500).send("Error occured server");
+    }
+  };
+
+  static FetchTransaction = async (req, res) => {
+    try {
+      const user=req.user.id;
+      
+      const datas = await Expense.find({ user: user }).sort({_id:-1}).limit(5);
+      
+      // console.log(datas);
+
+
+      res.json(datas);
     } catch (error) {
       console.error(error.message);
       res.status(500).send("Error occured server");
