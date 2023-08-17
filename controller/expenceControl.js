@@ -27,12 +27,22 @@ class expenceControl {
 
   static fetchdashdata = async (req, res) => {
     try {
+
+      const user=req.user._id
+      
       const date=new Date();
         const arr=[]
         let i=0;
         for (let index = i; index <=11; index++) {
           date.setMonth(index);
-          let test=await Expense.find({month:index+1});
+
+          const test=await Expense.aggregate( [
+            { $match:  {$and:[{ month: { $eq:index+1 } },{user:{$eq:user}}] } } ,
+            
+          ] );
+          console.log(test);
+
+          // let test=await Expense.find({month:index+1});
           let obj={"name":date.toLocaleString('en-US',{month:'short'}),"Food & Drinks":0,"Rents":0,"Entertainment":0};
 
           test.map((v)=>{
@@ -56,6 +66,12 @@ class expenceControl {
 
   static Fetchlastmonthdata = async (req, res) => {
     try {
+
+      // const datas = await Expense.find({ user: req.user.id });
+      // console.log(datas);
+      const user=req.user._id
+      console.log(user);
+
       const date=new Date();
       let month=date.getMonth();
       let month1=month+1;
@@ -76,11 +92,11 @@ class expenceControl {
 
      
       const data=await Expense.aggregate( [
-        { $match:  { month: { $gte: month3, $lte: month1 } }  } ,
+        { $match:  {$and:[{ month: { $gte: month3, $lte: month1 } },{user:{$eq:user}}] } } ,
         
       ] );
       
-
+// console.log(data);
       data.map((v)=>{
         if(v.month===month1){
          arr1.push(v)
@@ -133,7 +149,7 @@ class expenceControl {
 
      
 
-      // console.log(arr);
+      // console.log(superarray);
         res.json(superarray);
 
 
