@@ -55,7 +55,7 @@ class UserControler {
             res.send({ status: "failed", message: "Email or Password is not valid" });
           }
         } else {
-          res.send({ status: "failed", message: "User does mot exist please register" });
+          res.send({ status: "failed", message: "User does not exist please register" });
         }
       } else {
         res.send({ status: "failed", message: "All fields are required" });
