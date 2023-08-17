@@ -48,8 +48,8 @@ class UserControler {
         if (user != null) {
           const isMatch = await bcrypt.compare(password, user.password);
           if (user.email === email && isMatch) {
-            const access_token = jwt.sign({ userID: user._id }, process.env.jwt_secret, { expiresIn: "1h" });
-            const refresh_token = jwt.sign({ userID: user._id }, process.env.jwt_secret, { expiresIn: "1.5h" });
+            const access_token = jwt.sign({ userID: user._id }, process.env.jwt_Secret, { expiresIn: "1h" });
+            const refresh_token = jwt.sign({ userID: user._id }, process.env.jwt_Secret, { expiresIn: "1.5h" });
             res.send({ status: "Success", message: "Login Successfull,Redirecting to Dashboard", token: { access_token: access_token, refresh_token: refresh_token } });
           } else {
             res.send({ status: "failed", message: "Email or Password is not valid" });
