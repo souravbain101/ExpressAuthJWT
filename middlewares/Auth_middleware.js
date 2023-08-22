@@ -4,7 +4,7 @@ import usermodel from "../models/UserSchema.js";
 const CheckUserauth=async(req,res,next)=>{
     let token
     const {authorization}=req.headers
-    
+    console.log(authorization)
 
     if (authorization && authorization.startsWith('Bearer')) {
         try {

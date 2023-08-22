@@ -15,6 +15,17 @@ class expenceControl {
       res.send({ status: "failed", message: "Unable to Login" });
     }
   };
+  
+  static deleteExpensedata = async (req, res) => {
+    try {
+      const exid = req.param("id")
+      const data = await Expense.deleteOne({_id:exid});
+      res.send({ status: "success", message: "Deleted" })
+    } catch (error) {
+      console.log(error);
+      res.send({ status: "failed", message: "Delete Failed" });
+    }
+  };
   static fetchExpences = async (req, res) => {
     try {
       const datas = await Expense.find({ user: req.user.id });
