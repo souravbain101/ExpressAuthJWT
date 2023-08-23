@@ -16,4 +16,7 @@ router.get("/FetchTransaction", expenceControl.FetchTransaction);
 // ROUTE 3 : detele expence using : DELETE "/expence/delete" login required
 router.delete("/delete/:id",expenceControl.deleteExpensedata);
 
+// ROUTE 4 : detele expence using : DELETE "/expence/edit/${id}" login required
+router.put("/edit/:id",expenceControl.editExpensedata);
+
   export default router;
