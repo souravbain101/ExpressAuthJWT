@@ -9,10 +9,10 @@ class expenceControl {
 
       const savedData = await newData.save();
       console.log(savedData);
-      res.send({ status: "success", message: "added your data" });
+      res.send({ status: "success", message: "Your data is added successfully" });
     } catch (error) {
       console.log(error);
-      res.send({ status: "failed", message: "Unable to Login" });
+      res.send({ status: "failed", message: "Unable add data" });
     }
   };
   static editExpensedata = async (req, res) => {
@@ -21,7 +21,7 @@ class expenceControl {
       const exid = req.params["id"];
       const data = await Expense.findOneAndUpdate({ _id: exid },{category,date,currency,amount},{new: true})
       console.log(data);
-      res.send({ status: "success", message: "Edited",editeddata:data })
+      res.send({ status: "success", message: "Edited successfully",editeddata:data })
     } catch (error) {
       console.log(error);
       res.send({ status: "failed", message: "Edit Failed" });
@@ -31,7 +31,7 @@ class expenceControl {
     try {
       const exid = req.params["id"];
       await Expense.deleteOne({ _id: exid });
-      res.send({ status: "success", message: "Deleted" });
+      res.send({ status: "success", message: "Your data has been removed" });
     } catch (error) {
       console.log(error);
       res.send({ status: "failed", message: "Delete Failed" });
