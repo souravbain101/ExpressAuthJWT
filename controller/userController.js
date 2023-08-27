@@ -7,12 +7,12 @@ import transporter from "../config/EmailConfig.js";
 
 class UserControler {
   static UserRegistration = async (req, res) => {
-    const { name, email, password, password_confirmation, tc } = req.body;
+    const { name, email, password, password_confirmation } = req.body;
     const user = await usermodel.findOne({ email: email });
     if (user) {
       res.send({ status: "failed", message: "Email Already Exists" });
     } else {
-      if (name && email && password && password_confirmation && tc) {
+      if (name && email && password && password_confirmation) {
         if (password === password_confirmation) {
           try {
             const salt = await bcrypt.genSalt(10);
@@ -21,7 +21,7 @@ class UserControler {
               name: name,
               email: email,
               password: hashPassword,
-              tc: tc,
+              
             });
             await newUser.save();
             // const saved_user=await usermodel.findOne({email:email});
