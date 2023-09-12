@@ -97,7 +97,7 @@ class UserControler {
       if (user) {
         const secret = user._id + process.env.jwt_Secret;
         const token = jwt.sign({ userID: user._id }, secret, { expiresIn: "10m" });
-        const link = `http://localhost:3000/api/user/reset/${user._id}/${token}`;
+        const link = `https://backend-d5zl.onrender.com/api/user/reset/${user._id}/${token}`;
         console.log(link);
         let info = transporter.sendMail({
           from: process.env.EMAIL_FROM,
